@@ -1,6 +1,6 @@
-## Homework 4: Unet end2end NN training over BSD300 dataset
+# Homework 4: Unet end2end NN training over BSD300 dataset
 
-# Part1: seperating dataset into training, test, and validation:
+## Part1: seperating dataset into training, test, and validation:
 
 - **Formatted String** : `f"..."`  
     - Can be used in combination with placeholders {var1}, {var2}
@@ -23,7 +23,7 @@
     - `my_list[1:9:2]` #Elements 1to9 with step size 2
     - `[1,2,3] + [3,4,5] = [1, 2, 3, 3, 4, 5]` #combines two of them into one
 
-# Part2: creating a class for Dataset
+## Part2: creating a class for Dataset
 
 - Classes are a fundamental feature of OOP
 - allow for reusable and structured code
@@ -97,7 +97,7 @@
 
 - `train_loader = DataLoader(train_set, batch_size=batch_size)` DataLoader is a class provided by PyTorch that helps efficiently loading and batching the data from a dataset. Also allows iterating over the batches. such as `for batch in dataloader:`
 
-# Part 3: Training and Validating using the Dataset
+## Part 3: Training and Validating using the Dataset
 
 - `model = Unet(in_chans=1,out_chans=1,num_pool_layers=4,chans=64)` is initialize the NN architecture that we used. and `model = model.to("cuda")` moves our model computation into GPU
 
