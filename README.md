@@ -1,4 +1,4 @@
-# DLIS
+# **DLIS (Deep Learning on Inverse Problems)**
 
 ## **HW3**
 
