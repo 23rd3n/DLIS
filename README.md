@@ -1,8 +1,6 @@
 # DLIS
-## The solutions created by me to keep track 
-### Starts from the HW3
 
-**HW3**
+## **HW3**
 
 - Observations are obtained through the convolution of a true vector x with a matrix A which is created from the 1D Gaussion Kernel. These observations are corrupted by n-dimensional iid Gaussian random noise vector. 
 
@@ -10,7 +8,7 @@
 
 - Then from this closed form solution bias and variance terms are seperated to observe the trade of between. 
 
-**HW4**
+## **HW4**
 
 - In this homework, an end-to-end Unet neural network was trained on the Berkeley Segmentation Dataset (BSD300) which contains 300 clean color images. The dataset aws seperated as 200 for training dataset, 50 for testing dataset and the remaining 50 for the validation dataset.
 
