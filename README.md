@@ -86,6 +86,20 @@ $$R(x) = \sum_{i=1}^{k} \langle \phi_{i} (C_{i} x), 1 \rangle$$
 
 ## **HW6: Noise2Noise vs. Supervised Learning
 
-- Supervised training requries (x,y) data. A NN $f_{\theta}$ is trained to predict target image based on noisy measuremnt by minimizing the supervised loss:
+- Supervised training requries $(x_{i},y_{i})$ data. A NN $f_{\theta}$ is trained to predict target image based on noisy measuremnt by minimizing the supervised loss:
 
-$$ L(\theta) = \frac{1}{N} \sum_{i=1}^{N} \l (f_{\theta} (y_{i}, x_{i}))$$
+$$ L(\theta) = \frac{1}{N} \sum_{i=1}^{N} l(f_{\theta} (y_{i}, x_{i}))$$
+
+    where l is a loss function such as MSE or l1-norm.
+
+- But in real-life practice, we don't always have access to the ground-truth, therefore we need different approaches to such problems.
+
+- Three approaches for constructing self-supervised loss:
+
+    - 1) Construct an unbiased estimate of supervised loss
+        - requires extra measurements but doesn't require extra assumptions and with sufficent data, gets the performance as in the supervised loss
+
+    - 2) Construct a self-supervised loss based on Stein's unbiased estimator.
+
+    - 3) Construct a self-supervised loss based on predicting one part of an image from another part, and as such makes explicit or implicit assumptions about images. Even with a lot of training data, this approach is typically performs worse than the supervised manner.
+
