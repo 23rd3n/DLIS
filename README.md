@@ -66,7 +66,7 @@
 
     This can be written as, $\lVert x \rVert _{TV} = \lVert Cx \rVert _{1}$ where C is the circular matrix in the first row c=[1,-1,0,...,0]. Total Variation norm can be viewed as convolution with the filter [-1,1] then summing up the entries:
 
-    $$\lVert x \rVert _{TV} = \langle |Cx|,1 \rangle$$
+    \[\lVert x \rVert _{TV} = \langle |Cx|,1 \rangle\]
     where 1 = [1,1,1..,1] is all-ones vector.
 
 - A generalization of the TV-nrom is the Fields of Expert Model defined as:
