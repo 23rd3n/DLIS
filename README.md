@@ -90,8 +90,6 @@ $$R(x) = \sum_{i=1}^{k} \langle \phi_{i} (C_{i} x), 1 \rangle$$
 
 $$ L(\theta) = \frac{1}{N} \sum_{i=1}^{N} l(f_{\theta} (y_{i}, x_{i}))$$
 
-    where l is a loss function such as MSE or l1-norm.
-
 - But in real-life practice, we don't always have access to the ground-truth, therefore we need different approaches to such problems.
 
 - Three approaches for constructing self-supervised loss:
