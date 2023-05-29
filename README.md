@@ -88,7 +88,7 @@ $$R(x) = \sum_{i=1}^{k} \langle \phi_{i} (C_{i} x), 1 \rangle$$
 
 - Supervised training requries $(x_{i},y_{i})$ data. A NN $f_{\theta}$ is trained to predict target image based on noisy measuremnt by minimizing the supervised loss:
 
-    $$ L(\theta) = \frac{1}{N} \sum_{i=1}^{N} l(f_{\theta} (y_{i}, x_{i}))$$
+$$ L(\theta) = \frac{1}{N} \sum_{i=1}^{N} l(f_{\theta} (y_{i}, x_{i}))$$
 
     where l is a loss function such as MSE or l1-norm.
 
