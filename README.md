@@ -42,9 +42,9 @@
 
 - Formulation of ISTA as a neural network: 
 
-$$x_{t+1}=\tau_{\theta}(Qx_{t}+By)$$
+    $$x_{t+1}=\tau_{\theta}(Qx_{t}+By)$$
 
-with $Q=(I-\eta A^{T}A)$, $B=\eta A^{T}$, and $\theta=\lambda \eta$. This corresponds to performing a forward-pass through a recurrent neural network (unlike traditional NNs, RNNs have a memory component that enables them to maintain information about previous inputs and use it to make predictions or decisions), with fixed weights.
+    with $Q=(I-\eta A^{T}A)$, $B=\eta A^{T}$, and $\theta=\lambda \eta$. This corresponds to performing a forward-pass through a recurrent neural network (unlike traditional NNs, RNNs have a memory component that enables them to maintain information about previous inputs and use it to make predictions or decisions), with fixed weights.
 
 - Gregor and LeCun’s idea is to view the final result after k iterations, $f_{\theta}(y) = x_{t}$ , as function of the parameters $\theta = {Q, B, \theta}$, and train those parameters on a given dataset by minimizing the loss. This algorithm is called **LISTA** for **Learned ISTA**.
 
