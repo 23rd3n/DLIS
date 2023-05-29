@@ -22,7 +22,7 @@
 
 ## **HW5: CT Image Reconstruction with a Variational Network**
 
-### Unrolled Neural Networks:
+### 1- Unrolling the ISTA :
 
 - Improve upon a classic iterative method in terms of computational speed, or obtaining better image quailty.
 
@@ -51,3 +51,27 @@
 - Gregor and LeCun used a T=7 iterations and get the similar performance of ISTA with 70 iterations (10 times speedup). But if we don't care about the speed and time then running ISTA for so long will achieve a better performance than LISTA for sparse reconstruction.
 
 - This algorithm has a caveat as can be seen from the equation $x_{t+1}=\tau_{\theta}(Qx_{t}+By)$, this algorithm doesn't take the forward model into account (we learn Q,B, $\theta$ ). Therefore algorithm both need to learn signal and forward model which is very wasteful. Also, for large size of images, Q and B is very large since occupying so much memory. Eventhough the memory requirement can be decreased using SVD or similar decompositions, not using the knowledge of forward model is not a favorable thing to do.
+
+- Gregor and LeCun's work applies for sparse recovery but the idea of unrolling a proximal gradient descent algorithm can be applied to general iterative algorithms for solving a variety of problems.
+
+### 2- A parameter efficent variational network :
+
+- Unrolling the total-variation-reqularized least-squares, works well for MRI, has few params.
+
+- To prevent over-fitting to the noisy data, it is beneficial to stop the ISTA after some iterations, but instead of early stopping we can also extend the LS problem by an additional regularization term R(u) to prevent over-fitting. There is a trade-off between regularizator and LS term.
+
+- A popular choice for the regularizer for imaging problems is the total-variation norm, which works well if images consist of patches that are relatively constant. The total variation norm:
+
+    $$\lVert x \rVert _{TV} = \sum_{i=1}^{n-1} |x_{i}-x_{i+1}|$$
+
+    This can be written as, $\lVert x \rVert _{TV} = \lVert Cx \rVert _{1}$ where C is the circular matrix in the first row c=[1,-1,0,...,0]. Total Variation norm can be viewed as convolution with the filter [-1,1] then summing up the entries:
+
+    $$\lVert x \rVert _{TV} = \langle |Cx|,1 \rangle$$
+    where 1 = [1,1,1..,1] is all-ones vector.
+
+- A generalization of the TV-nrom is the Fields of Expert Model defined as:
+
+    $$R(x)=\sum_{i=1}^{k} \langle \phi (C_{i} x), 1 \rangle$$
+
+- The Fields of Expert models can be better regularizer for natural images than the total variation norm, since it contains TV as a special case, but can also express more complex regularizers.
+
