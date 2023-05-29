@@ -71,7 +71,12 @@
 
 - A generalization of the TV-nrom is the Fields of Expert Model defined as:
 
-    $$R(x)= \sum _{i=1}^{k} \langle \phi  (C_{i} x), 1 \rangle$$
+    $$R(x)= \sum {i=1}^{k} \langle \phi _{i} (C_{i} x), 1 \rangle$$
 
 - The Fields of Expert models can be better regularizer for natural images than the total variation norm, since it contains TV as a special case, but can also express more complex regularizers.
+
+- **The variational network is obtained by unrolling the gradient descent iterations of a regularized least-squares problem with a Fields of Expert regularizer. Then the overall equation would be**
+
+    $$x_{t+1} = x_{t} - \eta (A^{T} (A x_{t} - y) +  \sum_{i=1} C^{T} \psi _{i}^{'} (C_{i} x_{t}))$$
+
 
