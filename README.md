@@ -29,7 +29,7 @@
 - Considered linear inverse problem **y = Ax+b** , where A is typically wide matrix, or a matrix that is poorly conditioned, and z is the noise.
 
 - Iterative Shrinkage Thresholding Algorithm (ISTA) is a fast iterative for solving the l1-reqularized least-squares optimization problem 
-$$\underset{x}{\min} \|kAx - y\|_2^2 + \lambda\|x\|_1$$
+$$\min_{x} \frac{1}{2} \lVert Ax-y \rVert _{2}^{2}+ \lambda\lVert x \rVert _{1}$$
 for sparse vector reconstruction. ISTA is initilazed with $x_{0}=0$ and its iterations are given by
 
     $$x_{t+1}=\tau_{\lambda \eta}x_{t}-\eta A^{T}(Ax_{t}-y)$$
@@ -42,7 +42,7 @@ for sparse vector reconstruction. ISTA is initilazed with $x_{0}=0$ and its iter
 
 $$x_{t+1}=\tau_{\theta}(Qx_{t}+By)$$
 
-with $Q=(I-\etaA^{T}A)$, $B=\etaA^{T}$, and $\theta=\lambda \eta$. This corresponds to performing a forward-pass through a recurrent neural network (unlike traditional NNs, RNNs have a memory component that enables them to maintain information about previous inputs and use it to make predictions or decisions), with fixed weights.
+with $Q=(I-\eta A^{T}A)$, $B=\eta A^{T}$, and $\theta=\lambda \eta$. This corresponds to performing a forward-pass through a recurrent neural network (unlike traditional NNs, RNNs have a memory component that enables them to maintain information about previous inputs and use it to make predictions or decisions), with fixed weights.
 
 - Gregor and LeCun’s idea is to view the final result after k iterations, $f_{\theta}(y) = x_{t}$ , as function of the parameters $\theta = {Q, B, \theta}$, and train those parameters on a given dataset by minimizing the loss. This algorithm is called **LISTA** for **Learned ISTA**.
 
