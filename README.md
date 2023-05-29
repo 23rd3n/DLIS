@@ -62,7 +62,7 @@
 
 - A popular choice for the regularizer for imaging problems is the total-variation norm, which works well if images consist of patches that are relatively constant. The total variation norm:
 
-    $$\lVert x \rVert  = \sum _{i=1}^{n-1} x_{i}-x_{i+1}$$
+    $$\lVert x \rVert  = \sum_{i=1}^{n-1} x_{i}-x_{i+1}$$
 
     This can be written as, $\lVert x \rVert _{TV} = \lVert Cx \rVert _{1}$ where C is the circular matrix in the first row c=[1,-1,0,...,0]. Total Variation norm can be viewed as convolution with the filter [-1,1] then summing up the entries:
 
