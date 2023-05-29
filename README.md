@@ -77,8 +77,19 @@
 
 - **The variational network is obtained by unrolling the gradient descent iterations of a regularized least-squares problem with a Fields of Expert regularizer. Then the overall equation would be**
 
-    $$x_{t+1} = x_{t} - \eta (A^{T} (A x_{t} - y) +  \sum_{i=1} C^{T} \psi _{i}^{'} (C_{i} x_{t}))$$
+    $$x_{t+1} = x_{t} - \eta (A^{T} (A x_{t} - y) + \sum_{i=1} C^{T} \psi' (C_{i} x_{t}))$$
 
     The last part can be viewed as a two-layer CNN, where the trainable parameters are the convolutional filters and the parameters of the activation function. Note that the parameters in each of the unrolled iteartions are trainable, and the stepsize parameter $\eta _{t}$ is also trainable as well.
 
 - The variational network discussed here outperforms a traditional un-trained method like TV norm minimization on natural and medical images and is relatively paramater efficient. However, substituting the simple two-layer CNN with a large U-net significantly improves the performance and gives essentially state-of-the-art performance for MRI reconstruction.
+
+Yes, there appears to be a mistake in the code you provided. The mistake lies in the term involving the summation:
+
+$$\sum_{i=1} C^{T} \psi {i}^{'} (C{i} x_{t})$$
+
+There are a couple of issues with this expression. First, the notation `C{i}` seems to indicate that you're referring to the ith element of the vector C. However, the correct notation for accessing the ith element of a vector would be C[i], not C{i}. So, you should replace C{i} with C[i].
+
+Second, the term `\psi {i}^{'} (C{i} x_{t})` is ambiguous and might contain a typographical error. If you're referring to the derivative of the function `\psi`, it is usually denoted as `\psi'` or `\psi'(\cdot)`. In this case, it seems like you want to apply the derivative to the term `C[i] x_{t}`. To make it clear, you should enclose the entire term `C[i] x_{t}` within parentheses before applying the derivative.
+
+Taking these points into account, the corrected version of the code would be:
+
