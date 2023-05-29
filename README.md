@@ -22,11 +22,30 @@
 
 ## **HW5: CT Image Reconstruction with a Variational Network**
 
-# Unrolled Neural Networks:
+### Unrolled Neural Networks:
 
 - Improve upon a classic iterative method in terms of computational speed, or obtaining better image quailty.
 
 - Considered linear inverse problem **y = Ax+b** , where A is typically wide matrix, or a matrix that is poorly conditioned, and z is the noise.
 
-- Iterative Shrinkage Thresholding Algorithm (ISTA) is a fast iterative for solving the l1-reqularized least-squares optimization problem for sparse vector reconstruction. ISTA is initilazed with $x_{0}=0$ and its iterations are given by
-**$$x_{t+1}=\tau_{\lambda \eta}x_{t}-\eta A^{T}(Ax_{t}-y)$$**
+- Iterative Shrinkage Thresholding Algorithm (ISTA) is a fast iterative for solving the l1-reqularized least-squares optimization problem  
+$$ \underset{x}{\min} \|kAx - y\|_2^2 + \lambda\|x\|_1 $$
+for sparse vector reconstruction. ISTA is initilazed with $x_{0}=0$ and its iterations are given by
+
+$$x_{t+1}=\tau_{\lambda \eta}x_{t}-\eta A^{T}(Ax_{t}-y)$$
+
+where $\tau_{\eta}$ is the soft-thresholding operator (non-linearity).
+
+- The motivation of the unrolled networks is to accelerate the existing ISTA algorithm through training but not necessarily better performance.
+
+- Formulation of ISTA as a neural network: 
+
+$$x_{t+1}=\tau_{\theta}(Qx_{t}+By)$$
+
+with $Q=(I-\etaA^{T}A)$, $B=\etaA^{T}$, and $\theta=\lambda \eta$. This corresponds to performing a forward-pass through a recurrent neural network (unlike traditional NNs, RNNs have a memory component that enables them to maintain information about previous inputs and use it to make predictions or decisions), with fixed weights.
+
+- Gregor and LeCun’s idea is to view the final result after k iterations, $f_{\theta}(y) = x_{t}$ , as function of the parameters $\theta = {Q, B, \theta}$, and train those parameters on a given dataset by minimizing the loss. This algorithm is called **LISTA** for **Learned ISTA**.
+
+- Gregor and LeCun used a T=7 iterations and get the similar performance of ISTA with 70 iterations (10 times speedup). But if we don't care about the speed and time then running ISTA for so long will achieve a better performance than LISTA for sparse reconstruction.
+
+- This algorithm has a caveat as can be seen from the equation $x_{t+1}=\tau_{\theta}(Qx_{t}+By)$, this algorithm doesn't take the forward model into account (we learn Q,B,$\theta$). Therefore algorithm both need to learn signal and forward model which is very wasteful. Also, for large size of images, Q and B is very large since occupying so much memory. Eventhough the memory requirement can be decreased using SVD or similar decompositions, not using the knowledge of forward model is not a favorable thing to do.
