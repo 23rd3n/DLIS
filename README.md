@@ -28,13 +28,13 @@
 
 - Considered linear inverse problem **y = Ax+b** , where A is typically wide matrix, or a matrix that is poorly conditioned, and z is the noise.
 
-- Iterative Shrinkage Thresholding Algorithm (ISTA) is a fast iterative for solving the l1-reqularized least-squares optimization problem  
-$$ \underset{x}{\min} \|kAx - y\|_2^2 + \lambda\|x\|_1 $$
+- Iterative Shrinkage Thresholding Algorithm (ISTA) is a fast iterative for solving the l1-reqularized least-squares optimization problem 
+$$\underset{x}{\min} \|kAx - y\|_2^2 + \lambda\|x\|_1$$
 for sparse vector reconstruction. ISTA is initilazed with $x_{0}=0$ and its iterations are given by
 
-$$x_{t+1}=\tau_{\lambda \eta}x_{t}-\eta A^{T}(Ax_{t}-y)$$
+    $$x_{t+1}=\tau_{\lambda \eta}x_{t}-\eta A^{T}(Ax_{t}-y)$$
 
-where $\tau_{\eta}$ is the soft-thresholding operator (non-linearity).
+    where $\tau_{\eta}$ is the soft-thresholding operator (non-linearity).
 
 - The motivation of the unrolled networks is to accelerate the existing ISTA algorithm through training but not necessarily better performance.
 
