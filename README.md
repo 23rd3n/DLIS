@@ -75,6 +75,10 @@
 
 - The Fields of Expert models can be better regularizer for natural images than the total variation norm, since it contains TV as a special case, but can also express more complex regularizers.
 
-- **The variational network is obtained by unrolling the gradient descent iterations of a regularized least-squares problem with a Fields of Expert regularizer. Then the overall equation would be** $x_{t+1} = x_{t} - \eta (A^{T} (A x_{t} - y) +  \sum_{i=1} C^{T} \psi _{i}^{'} (C_{i} x_{t}))$ The last part can be viewed as a two-layer CNN, where the trainable parameters are the convolutional filters and the parameters of the activation function. Note that the parameters in each of the unrolled iteartions are trainable, and the stepsize parameter $\eta _{t}$ is also trainable as well.
+- **The variational network is obtained by unrolling the gradient descent iterations of a regularized least-squares problem with a Fields of Expert regularizer. Then the overall equation would be**
+
+    $$x_{t+1} = x_{t} - \eta (A^{T} (A x_{t} - y) +  \sum_{i=1} C^{T} \psi _{i}^{'} (C_{i} x_{t}))$$
+
+    The last part can be viewed as a two-layer CNN, where the trainable parameters are the convolutional filters and the parameters of the activation function. Note that the parameters in each of the unrolled iteartions are trainable, and the stepsize parameter $\eta _{t}$ is also trainable as well.
 
 - The variational network discussed here outperforms a traditional un-trained method like TV norm minimization on natural and medical images and is relatively paramater efficient. However, substituting the simple two-layer CNN with a large U-net significantly improves the performance and gives essentially state-of-the-art performance for MRI reconstruction.
