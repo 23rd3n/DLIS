@@ -19,3 +19,14 @@
 - Then using DataLoader from the torch library, the dataset was prepared for training using a batch size for the epochs.
 
 - After, the parameters of the Unet, loss function, and optimizer were selected. The model was trained on the normalized images checking the PSNR value and loss on validation to observe overfitting.
+
+## **HW5: CT Image Reconstruction with a Variational Network**
+
+# Unrolled Neural Networks:
+
+- Improve upon a classic iterative method in terms of computational speed, or obtaining better image quailty.
+
+- Considered linear inverse problem **y = Ax+b** , where A is typically wide matrix, or a matrix that is poorly conditioned, and z is the noise.
+
+- Iterative Shrinkage Thresholding Algorithm (ISTA) is a fast iterative for solving the l1-reqularized least-squares optimization problem for sparse vector reconstruction. ISTA is initilazed with `$$x_{0}=0$$' and its iterations are given by
+$$x{t+1}=\tau_{\lamda \eta}x_{t}-\eta A^{T}(Ax_{t}-y)$$
