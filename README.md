@@ -77,7 +77,7 @@
 
 - **The variational network is obtained by unrolling the gradient descent iterations of a regularized least-squares problem with a Fields of Expert regularizer. Then the overall equation would be**
 
-    $$ x_{t+1} = x_{t} - \eta (A^{T} (A x_{t} - y) +  \sum_{i=1} C^{T} \psi _{i}^{'} (C_{i} x_{t})) $$
+    $x_{t+1} = x_{t} - \eta (A^{T} (A x_{t} - y) +  \sum_{i=1} C^{T} \psi _{i}^{'} (C_{i} x_{t}))$
 
     The last part can be viewed as a two-layer CNN, where the trainable parameters are the convolutional filters and the parameters of the activation function. Note that the parameters in each of the unrolled iteartions are trainable, and the stepsize parameter $\eta _{t}$ is also trainable as well.
 
