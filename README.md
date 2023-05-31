@@ -109,11 +109,7 @@ $$R(\boldsymbol{\theta})=\mathbb{E}\left[\ell\left(f_{\boldsymbol{\theta}}(\math
 
     but since we don't have the underlying joint PDF, we use the empirical risk function over N data points
 
-- But we don't have always ground truth; therefore, minimize self-supervised empirical risk function (average loss) over a N measurements and N randomized measurements
-
-$$ \mathcal{L}_{\mathrm{SS}}(\boldsymbol{\theta})=\frac{1}{N} \sum_{i=1}^N \ell_{\mathrm{SS}}\left(f_{\boldsymbol{\theta}}\left(\mathbf{y}_i\right), \mathbf{y}_i^{\prime}\right) $$
-
-in expectation over (x,y), minimizing this loss function is the same as minimizing the risk function. Therefore, with sufficient training data we can get the same performance as the supervised learning.
+- But we don't have always ground truth; therefore, minimize self-supervised empirical risk function (average loss) over a N measurements and N randomized measurements in expectation over (x,y), minimizing the supervised loss function is the same as minimizing the risk function. Therefore, with sufficient training data we can get the same performance as the supervised learning.
 
 - It is useful in denoising, we need to find $f_{\theta}$ that estimates ground truth images $x$ from the observation $y=x+e$, where e is the additive noise which can be gaussian or non-gaussian. We don't have access the ground truth but we do access the another randomized measurement of the ground truth with another indepent zero mean noise, specifically, $\mathbf{y}_i^{\prime} = \mathbf{x}_i^{\prime} + \mathbf{e}_i^{\prime}$
 
