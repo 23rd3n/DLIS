@@ -111,7 +111,7 @@ $$R(\boldsymbol{\theta})=\mathbb{E}\left[\ell\left(f_{\boldsymbol{\theta}}(\math
 
 - But we don't have always ground truth; therefore, minimize self-supervised empirical risk function (average loss) over a N measurements and N randomized measurements
 
-$$\mathcal{L}_{\mathrm{SS}}(\boldsymbol{\theta})=\frac{1}{N} \sum_{i=1}^N \ell_{\mathrm{SS}}\left(f_{\boldsymbol{\theta}}\left(\mathbf{y}_i\right), \mathbf{y}_i^{\prime}\right)$$
+$$ \mathcal{L}_{\mathrm{SS}}(\boldsymbol{\theta})=\frac{1}{N} \sum_{i=1}^N \ell_{\mathrm{SS}}\left(f_{\boldsymbol{\theta}}\left(\mathbf{y}_i\right), \mathbf{y}_i^{\prime}\right) $$
 
 in expectation over (x,y), minimizing this loss function is the same as minimizing the risk function. Therefore, with sufficient training data we can get the same performance as the supervised learning.
 
