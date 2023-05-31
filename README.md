@@ -84,7 +84,7 @@ $$R(x) = \sum_{i=1}^{k} \langle \phi_{i} (C_{i} x), 1 \rangle$$
 - The variational network discussed here outperforms a traditional un-trained method like TV norm minimization on natural and medical images and is relatively paramater efficient. However, substituting the simple two-layer CNN with a large U-net significantly improves the performance and gives essentially state-of-the-art performance for MRI reconstruction.
 
 
-## **HW6: Noise2Noise vs. Supervised Learning
+## **HW6: Noise2Noise vs. Supervised Learning**
 
 - Supervised training requries $(x_{i},y_{i})$ data. A NN $f_{\theta}$ is trained to predict target image based on noisy measuremnt by minimizing the supervised loss:
 
