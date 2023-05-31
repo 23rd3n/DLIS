@@ -102,3 +102,26 @@ $$ L(\theta) = \frac{1}{N} \sum_{i=1}^{N} l(f_{\theta} (y_{i}, x_{i}))$$
 
     - Construct a self-supervised loss based on predicting one part of an image from another part, and as such makes explicit or implicit assumptions about images. Even with a lot of training data, this approach is typically performs worse than the supervised manner.
 
+### **Self-supervised learning based on estimates of the supervised loss**
+
+- Our goal to get an estimator $f_{\theta}$ which would minimize the supervised risk function on a joint probability density function on data points $(x,y)$
+$$R(\boldsymbol{\theta})=\mathbb{E}\left[\ell\left(f_{\boldsymbol{\theta}}(\mathbf{y}), \mathbf{x}\right)\right]$$
+
+    but since we don't have the underlying joint PDF, we use the empirical risk function over N data points
+
+- But we don't have always ground truth; therefore, minimize self-supervised empirical risk function (average loss) over a N measurements and N randomized measurements 
+$$
+\mathcal{L}_{\mathrm{SS}}(\boldsymbol{\theta})=\frac{1}{N} \sum_{i=1}^N \ell_{\mathrm{SS}}\left(f_{\boldsymbol{\theta}}\left(\mathbf{y}_i\right), \mathbf{y}_i^{\prime}\right)
+$$
+
+    - in expectation over (x,y), minimizing this loss function is the same as minimizing the risk function. Therefore, with sufficient training data we can get the same performance as the supervised learning.
+
+- It is useful in denoising, we need to find $f_{\theta}$ that estimates ground truth images $x$ from the observation $y=x+e$, where e is the additive noise which can be gaussian or non-gaussian. We don't have access the ground truth but we do access the another randomized measurement of the ground truth with another indepent zero mean noise, specifically, $\mathbf{y}_i^{\prime} = \mathbf{x}_i^{\prime} + \mathbf{e}_i^{\prime}$
+
+- Therefore, the self-supervised loss:
+
+$$
+\ell_{\mathrm{SS}}\left(f_{\boldsymbol{\theta}}(\mathbf{y}), \mathbf{y}^{\prime}\right)=\left\|f_{\boldsymbol{\theta}}(\mathbf{y})-\mathbf{y}^{\prime}\right\|_2^2
+$$
+
+    should be minimized. With enough training data such self-supervised training gives essentially the same performance as super-vised training. This is not surprising given that the supervised loss is an approximation of the risk, and the approximation error goes to zero as the number of training examples N goes to infinity.
