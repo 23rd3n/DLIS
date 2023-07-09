@@ -1,8 +1,34 @@
 # **DLIS (Deep Learning on Inverse Problems)**
-
+**For detailed explanations of the codes, please refer the README inside the homework folders.**
 ## **HW1:Denoising a signal that lies in a subspace by projecting the observations onto this subspace**
 - We have some observations y, and we have a orthanormal basis matrix for k-dimensional subspace of n-dimensional signal x. 
 - For some values of k (from 0 to 1000 increasing by 100), we analyze the denoising performance using the average mean-squared error. 
+
+## **HW2: Implementation of ISTA(Iterative Soft-Thresholding Algorithm)**
+
+- Iterative Shrinkage Thresholding Algorithm (ISTA) is a fast iterative for solving the l1-reqularized least-squares optimization problem 
+
+    $$\min_{x} \frac{1}{2} \lVert Ax-y \rVert _{2}^{2}+ \lambda\lVert x \rVert _{1}$$
+
+    for sparse vector reconstruction. ISTA is initilazed with $x_{0}=0$ and its iterations are given by
+
+    $$x_{t+1}=\tau_{\lambda \eta}x_{t}-\eta A^{T}(Ax_{t}-y)$$
+
+    where $\tau_{\eta}$ is the soft-thresholding operator (non-linearity).
+
+- By minimizing the cost function via ISTA, we'll reconstruct 100-sparse signal x and we'll investigate the convergence of the algorithm. Then we'll change the sparsity and analyze if we are still able to reconstruct the sparse signal.
+
+- Signal models are very important for inverse problems because in inverse problems the forward map is not invertible or is ill-conditioned (ratio of singular values --> infinity). Therefore, either there are many solutions possible (more columns than rows) or since it is ill-conditioned it is not favorable to invert it (noise amplification).
+- Signal models help us escape these problems. With the assumption on the signal to be reconstructed, we can select one of the solutions in where there are many possible.
+- One of those signal models are the assumption of signal lies in the subspace or in the union of subspaces. Then using a few measurements or observations we can reconstruct the original signal. Therefore, sparsity in the signals are very important for computational efficacy and sample efficacy. Even if the signals are not sparse in some domains, we can find some dictionaries (domains) where they are sparse. For example, natural images are sparse in Discrete Cosine Transform. 
+- In natural images, low-frequency coefficients posses the most energy therefore ordered DCT coefficients decay very quickly that even we use 10% of them we would be still able to see the image details clearly. JPEG and lossy compression use this idea for size reduction. This is an example of orthanormal dictionaries as the norm of the dictionary is always 1 for DCT.
+- There are also overcomplete dictionaries. These dictionaries are such that even if you remove one or many columns, you would still be able to span the whole space. Therefore, they are called overcomplete.
+- Overcomplete dictionaries are more efficient in a sense that it is easier to find an overcomplete dictionary than to find an orthanormal bases. However, when representing signal in a overcomplete dictionaries, then reconstruction of the signals back is difficult since there are many representations of the sparse signal in the original.
+- In general we want to recover,  y = A'x'= A'Dx = Ax, here x is sparse in D and A=A'D, we can think of A as the subsampled Fourier Transform for MRI and D as the wavelet transform for sparse representation. Therefore, at the end we have y=Ax inverse problem that we want to find the x, which is a sparse vector.
+- The best one would be to use the l0-norm minimization of x that are subject to y=Ax, but this problem is computationally intractable, NP-hard problem. Therefore, instead we use l1-norm minimization (also called Basis Pursuit) to minimize the cost function and get the sparse vector x. One such algorithm that is in this class is ISTA which we defined above. There is a short check to see if the Basis Pursuit will allow us to get a reconstruction which is if number of measurement is larger than 2*sparsity * log(#cols/sparsity) given that #cols are large and sparsity is mildy large. Otherwise we would need to check if the tangenct cone of l1-norm and null space of A only collide in 0-vector.
+- The other algorithm is in the class of Greedy Methods, OMP (orthagonal matching pursuit), which builds a support set of sparse vector iteratively checking the correlations between residual vector and columns of A. This algorithm is easy to implement and computaitonally efficient but has a downside that if a wrong index is selected for the support set, then it stays in that set until the end. There are some advancements to this algorithm who take care of this problem.
+- Also there is a good theorem for sparse reconstruction that if every 2s-many columns of A are linearly independent, then the sparse reconstruction is possible. 
+- Finally, if a matrix A is mu-incoherent and s<(1/2*mu), then solution to both OMP and l1-norm minimization for y=Ax is the x itself. mu-coherence is defined as follows: if a matrix with unit norm columns has corelations with its every columns smaller than or equal to mu, then this matrix is called mu-incoherent.
 
 ## **HW3:Optimization with Regularization**
 
