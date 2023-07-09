@@ -2,10 +2,7 @@
 
 ## **HW1:Denoising a signal that lies in a subspace by projecting the observations onto this subspace**
 - We have some observations y, and we have a orthanormal basis matrix for k-dimensional subspace of n-dimensional signal x. 
-- For some values of k (from 0 to 1000 increasing by 100), we analyze the denoising performance using the average mean-squared error. Namely;
-
-![Equation](https://render.githubusercontent.com/render/math?math=%5Cfrac%7B%5Cleft%5C%7C%5Chat%7B%5Cmathbf%7Bx%7D%7D-%5Cmathbf%7Bx%7D%5E%7B%2A%7D%5Cright%5C%7C_2%5E2%20%2F%5Cleft%5C%7C%5Cmathbf%7Bx%7D%5E%7B%2A%7D%5Cright%5C%7C_2%5E2)
-
+- For some values of k (from 0 to 1000 increasing by 100), we analyze the denoising performance using the average mean-squared error. 
 
 ## **HW3:Optimization with Regularization**
 
