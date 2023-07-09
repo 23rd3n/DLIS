@@ -1,4 +1,13 @@
+[TOC]
 # **DLIS (Deep Learning on Inverse Problems)**
+
+## **HW1:Denoising a signal that lies in a subspace by projecting the observations onto this subspace**
+- We have some observations y, and we have a orthanormal basis matrix for k-dimensional subspace of n-dimensional signal x. 
+- For some values of k(1:100:1000), we analyze the denoising performance using the average mean-squared error. Namely;
+$$
+\left\|\hat{\mathbf{x}}-\mathbf{x}^*\right\|_2^2 /\left\|\mathbf{x}^*\right\|_2^2
+$$
+
 
 ## **HW3:Optimization with Regularization**
 
