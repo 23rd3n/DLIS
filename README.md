@@ -38,6 +38,33 @@
 
 - Then from this closed form solution bias and variance terms are seperated to observe the trade of between. 
 
+- Optimization based reconstruction methods work well if the forward operator A and statistical model of the underlying noise e are known. Also for optimization based reconstruction to yield an unique solution the most important thing is PRIOR ASSUMPTION on the signal must be well-modelled mathematically. For example, for sparse reconstruction, l1-norm regularizer is a good choice to begin with.
+- In the setups where these conditions are not satisfied, then Machine Learning methods may be well suited.
+- For inverse problems with with uncorraleted homogenous gaussian noise, the MAP estimator for log-likelihood function yields the least squares minimization with the prior assumption log p(x) = lamda*R(x).
+- The choice of regularizer is critical as it incorporates the prior assumption about the signal. Some popular ones:
+    - l2-norm: Also known as Tikhonov Regularization, ridge regression, weight decay. It is a good choice for communication channels since it minimizes the energy of the signal being set but it is not a good choice as it leads to overly smooth images.
+    - Total-variation-norm: It is actually the l1-norm of the gradient and helps the image to retain sharp images. This regularizer works well for MRI images and can be efficiently calculated.
+    - Sparse Regularization: When an image is explained in some dictionary(or sparsfying basis like wavelet or fourier), it is more suitable for optimization based approaches. And also total-variation-norm is a special case of sparse regularization, if we consider the sparsifying basis as the finete difference opeator matrix.
+- Tikhonov regularization (l2-norm) helps us make the deconvolution operator more stable. Because if the forward operator is ill-conditioned(ratio of singular values goes to infinity) then the noise will be magnified in the case of inverting the forward operator. But with the help of lamda||x||2, we can make the problem well-conditioned but the trade-off here is that we increase the bias of the model. Therefore if we want to decrease the variance of the model by increasing lamda, we also increase the bias of the system. But selecting the lamda a correct value, we can find a better solution than not having it at all.
+
+- min ||Ax-y|| has a closed form solution, by projecting the measurements onto the range of A, by left-multiplying y with the psuedo-inverse(left-inverse) of A;however, this inverse operation is quite hugely costly if the number of rows are huge. Also the solution might not be possible at all. Therefore we are OK with approximated solutions. But since the largeness of the model, we also have to stick with the first-order gradient methods (gradient descent) and hope that the loss-function is convex. Because if the loss-function is convex then we can get a global estimator just by using the first-order derivaties(gradient descent) methods.
+
+- If we analyse the convergence of quadratic loss function with the matrix being positive semi-definite, we end up with the conclusion that N~O(K*log(1/eps)) many iterations will be enough to find a eps-close solution by having a step size of 2/(M+m). Here M is the largest singular value, and m is the smallest singular value of the matrix. And K is the condition number of the matrix which equal to M/m.
+
+- **Proximal Gradient Descent for l1-norm minimization**: The optimization problem min ||x||1 subject to ||Ax-y||2 <= eps, is identical with the optimization problem min ||Ax-y||_2 + lamda||x||_1, but applying gradient descent directly to this optimization problem is not possible as the gradient of l1-norm is not well defined everywhere. Instead we can employ a proximal gradient descent algorithm where we just take the derivative of f(x) = ||Ax-y||_2, which is A.T*A-Ay.
+    - solving iteratively x_{k+1} = x_k -eta*grad(f) is identical to solving argmin ||x-(x_k -eta*grad(f))||_2^2 + eta*lamda*||x||_1 because both of them has the premise of having close x's. And the latter minimization problem is coordinate-wise seperable. If we sepeate it into min (x-xi)^2 + eta*lamda*|x|, where xi = [xk-eta*grad(f)]i then this problem has a closed form solution where we use the soft-thresholding function tau, and hence the name of this algorithm, Iterative soft-thresholding algorithm.
+    - The algorithm is specifically:
+    - Iterative Shrinkage Thresholding Algorithm (ISTA) is a fast iterative for solving the l1-reqularized least-squares optimization problem 
+
+    $$\min_{x} \frac{1}{2} \lVert Ax-y \rVert _{2}^{2}+ \lambda\lVert x \rVert _{1}$$
+
+    for sparse vector reconstruction. ISTA is initilazed with $x_{0}=0$ and its iterations are given by
+
+    $$x_{t+1}=\tau_{\lambda \eta}x_{t}-\eta A^{T}(Ax_{t}-y)$$
+
+    where $\tau_{\eta}$ is the soft-thresholding operator (non-linearity).
+
+
 ## **HW4:Denoising Images with a U-Net**
 
 - In this homework, an end-to-end Unet neural network was trained on the Berkeley Segmentation Dataset (BSD300) which contains 300 clean color images. The dataset was seperated into 200 images for training dataset, 50 for testing dataset and the remaining 50 for the validation dataset.
