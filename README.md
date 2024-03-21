@@ -1,4 +1,4 @@
-# **DLIS (Deep Learning on Inverse Problems)**
+# **Deep Learning Methods for Image Reconstruction**
 **For detailed explanations of the codes, please refer the README inside the homework folders.**
 ## **HW1:Denoising a signal that lies in a subspace by projecting the observations onto this subspace**
 - We have some observations y, and we have a orthanormal basis matrix for k-dimensional subspace of n-dimensional signal x. 
