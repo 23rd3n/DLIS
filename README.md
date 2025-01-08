@@ -1,10 +1,13 @@
 # **Deep Learning Methods for Image Reconstruction**
-**For detailed explanations of the codes, please refer the README inside the homework folders.**
-## **HW1:Denoising a signal that lies in a subspace by projecting the observations onto this subspace**
+
+### Based on a course given on TUM, named Deep Learning for Inverse Problems
+
+
+## **[Denoising a signal that lies in a subspace](denoising_subspace_signal.ipynb)**
 - We have some observations y, and we have a orthanormal basis matrix for k-dimensional subspace of n-dimensional signal x. 
 - For some values of k (from 0 to 1000 increasing by 100), we analyze the denoising performance using the average mean-squared error. 
 
-## **HW2: Implementation of ISTA(Iterative Soft-Thresholding Algorithm)**
+## **[Implementation of ISTA(Iterative Soft-Thresholding Algorithm)](sparse_signal_reconstruction_ISTA.ipynb)**
 
 - Iterative Shrinkage Thresholding Algorithm (ISTA) is a fast iterative for solving the l1-reqularized least-squares optimization problem 
 
@@ -30,7 +33,7 @@
 - Also there is a good theorem for sparse reconstruction that if every 2s-many columns of A are linearly independent, then the sparse reconstruction is possible. 
 - Finally, if a matrix A is mu-incoherent and s<(1/2*mu), then solution to both OMP and l1-norm minimization for y=Ax is the x itself. mu-coherence is defined as follows: if a matrix with unit norm columns has corelations with its every columns smaller than or equal to mu, then this matrix is called mu-incoherent.
 
-## **HW3:Optimization with Regularization**
+## **[Bias-Variance Trade-off, Optimization with regularizers](bias_variance_analysis.ipynb)**
 
 - Observations are obtained through the convolution of a true vector x with a matrix A which is created from the 1D Gaussion Kernel. These observations are corrupted by n-dimensional iid Gaussian random noise vector. 
 
@@ -65,9 +68,9 @@
     where $\tau_{\eta}$ is the soft-thresholding operator (non-linearity).
 
 
-## **HW4:Denoising Images with a U-Net**
+## **[Denoising Images with a U-Net](denoising_unet.ipynb)**
 
-- In this homework, an end-to-end Unet neural network was trained on the Berkeley Segmentation Dataset (BSD300) which contains 300 clean color images. The dataset was seperated into 200 images for training dataset, 50 for testing dataset and the remaining 50 for the validation dataset.
+- End-to-end Unet neural network was trained on the Berkeley Segmentation Dataset (BSD300) which contains 300 clean color images. The dataset was seperated into 200 images for training dataset, 50 for testing dataset and the remaining 50 for the validation dataset.
 
 - Firstly, for training purposes, all color images were converted into grayscale, then a zero-mean Gaussian noise was added to these grayscale images. Then these images were divided into chunks to reduce the computational costs.
 
@@ -77,7 +80,7 @@
 
 - After, the parameters of the Unet, loss function, and optimizer were selected. The model was trained on the normalized images checking the PSNR value and loss on validation to observe overfitting.
 
-## **HW5: CT Image Reconstruction with a Variational Network**
+## **[CT Image Reconstruction with a Variational Network](recovering_CT_varnet.ipynb)**
 
 ### 1- Unrolling the ISTA :
 
@@ -103,34 +106,11 @@
 
     with $Q=(I-\eta A^{T}A)$, $B=\eta A^{T}$, and $\theta=\lambda \eta$. This corresponds to performing a forward-pass through a recurrent neural network (unlike traditional NNs, RNNs have a memory component that enables them to maintain information about previous inputs and use it to make predictions or decisions), with fixed weights.
 
-- Gregor and LeCun’s idea is to view the final result after k iterations, $f_{\theta}(y) = x_{t}$ , as function of the parameters $\theta = {Q, B, \theta}$, and train those parameters on a given dataset by minimizing the loss. This algorithm is called **LISTA** for **Learned ISTA**.
-
-- Gregor and LeCun used a T=7 iterations and get the similar performance of ISTA with 70 iterations (10 times speedup). But if we don't care about the speed and time then running ISTA for so long will achieve a better performance than LISTA for sparse reconstruction.
-
-- This algorithm has a caveat as can be seen from the equation $x_{t+1}=\tau_{\theta}(Qx_{t}+By)$, this algorithm doesn't take the forward model into account (we learn Q,B, $\theta$ ). Therefore algorithm both need to learn signal and forward model which is very wasteful. Also, for large size of images, Q and B is very large since occupying so much memory. Eventhough the memory requirement can be decreased using SVD or similar decompositions, not using the knowledge of forward model is not a favorable thing to do.
-
-- Gregor and LeCun's work applies for sparse recovery but the idea of unrolling a proximal gradient descent algorithm can be applied to general iterative algorithms for solving a variety of problems.
-
 ### 2- A parameter efficent variational network :
 
 - Unrolling the total-variation-reqularized least-squares, works well for MRI, has few params.
 
 - To prevent over-fitting to the noisy data, it is beneficial to stop the ISTA after some iterations, but instead of early stopping we can also extend the LS problem by an additional regularization term R(u) to prevent over-fitting. There is a trade-off between regularizator and LS term.
-
-- A popular choice for the regularizer for imaging problems is the total-variation norm, which works well if images consist of patches that are relatively constant. The total variation norm:
-
-    $$\lVert x \rVert  = \sum_{i=1}^{n-1} |x_{i}-x_{i+1}|$$
-
-    This can be written as, $\lVert x \rVert _{TV} = \lVert Cx \rVert _{1}$ where C is the circular matrix in the first row c=[1,-1,0,...,0]. Total Variation norm can be viewed as convolution with the filter [-1,1] then summing up the entries:
-
-    $$\lVert x \rVert _{TV} = \langle |Cx|,1 \rangle$$
-    where 1 = [1,1,1..,1] is all-ones vector.
-
-- A generalization of the TV-nrom is the Fields of Expert Model defined as:
-
-$$R(x) = \sum_{i=1}^{k} \langle \phi_{i} (C_{i} x), 1 \rangle$$
-
-- The Fields of Expert models can be better regularizer for natural images than the total variation norm, since it contains TV as a special case, but can also express more complex regularizers.
 
 - **The variational network is obtained by unrolling the gradient descent iterations of a regularized least-squares problem with a Fields of Expert regularizer. Then the overall equation would be**
 
@@ -138,10 +118,8 @@ $$R(x) = \sum_{i=1}^{k} \langle \phi_{i} (C_{i} x), 1 \rangle$$
 
     The last part can be viewed as a two-layer CNN, where the trainable parameters are the convolutional filters and the parameters of the activation function. Note that the parameters in each of the unrolled iteartions are trainable, and the stepsize parameter $\eta _{t}$ is also trainable as well.
 
-- The variational network discussed here outperforms a traditional un-trained method like TV norm minimization on natural and medical images and is relatively paramater efficient. However, substituting the simple two-layer CNN with a large U-net significantly improves the performance and gives essentially state-of-the-art performance for MRI reconstruction.
 
-
-## **HW6: Noise2Noise vs. Supervised Learning**
+## **[Noise2Noise vs. Supervised Learning](noise2noise_denoise.ipynb)**
 
 - Supervised training requries $(x_{i},y_{i})$ data. A NN $f_{\theta}$ is trained to predict target image based on noisy measuremnt by minimizing the supervised loss:
 
@@ -164,8 +142,6 @@ $$ L(\theta) = \frac{1}{N} \sum_{i=1}^{N} l(f_{\theta} (y_{i}, x_{i}))$$
 - Our goal to get an estimator $f_{\theta}$ which would minimize the supervised risk function on a joint probability density function on data points $(x,y)$
 $$R(\boldsymbol{\theta})=\mathbb{E}\left[\ell\left(f_{\boldsymbol{\theta}}(\mathbf{y}), \mathbf{x}\right)\right]$$
 
-    but since we don't have the underlying joint PDF, we use the empirical risk function over N data points
-
 - But we don't have always ground truth; therefore, minimize self-supervised empirical risk function (average loss) over a N measurements and N randomized measurements in expectation over (x,y), minimizing the supervised loss function is the same as minimizing the risk function. Therefore, with sufficient training data we can get the same performance as the supervised learning.
 
 - It is useful in denoising, we need to find $f_{\theta}$ that estimates ground truth images $x$ from the observation $y=x+e$, where e is the additive noise which can be gaussian or non-gaussian. We don't have access the ground truth but we do access the another randomized measurement of the ground truth with another indepent zero mean noise, specifically, $\mathbf{y}_i^{\prime} = \mathbf{x}_i^{\prime} + \mathbf{e}_i^{\prime}$
@@ -175,3 +151,46 @@ $$R(\boldsymbol{\theta})=\mathbb{E}\left[\ell\left(f_{\boldsymbol{\theta}}(\math
 $$\ell_{\mathrm{SS}}\left(f_{\boldsymbol{\theta}}(\mathbf{y}), \mathbf{y}^{\prime}\right)=\left\||f_{\boldsymbol{\theta}}(\mathbf{y})-\mathbf{y}^{\prime}\right\||_2^2$$
 
 should be minimized. With enough training data such self-supervised training gives essentially the same performance as super-vised training. This is not surprising given that the supervised loss is an approximation of the risk, and the approximation error goes to zero as the number of training examples N goes to infinity.
+
+## **[Denoising using AutoEncoder](denoising_autoencoder.ipynb)**
+
+- Autoencoders are neural networks trained to reconstruct their input, with a hidden layer that creates a compressed representation.
+
+- The encoder part compresses the input data into a lower-dimensional latent space, while the decoder reconstructs the original data from this compressed representation.
+
+- For denoising:
+    - Input is corrupted with noise
+    - Network learns to output clean images
+    - Training uses pairs of noisy and clean images
+    - Loss function measures reconstruction quality
+
+- Key advantages:
+    - Learns efficient data representations
+    - Can handle various noise types
+    - Preserves important image features
+    - Computationally efficient once trained
+
+## **[Denoising using GANs](denoising_autoencoder.ipynb)**
+
+- Core Concept:
+    - The Generator tries to convert noisy images back to clean ones
+    - The Discriminator learns to distinguish between real clean images and the Generator's denoised outputs
+    - Through adversarial training, the Generator gets better at producing clean, realistic images
+
+
+- The Process:
+    - We start with pairs of clean and noisy images
+    - The Generator takes noisy images as input and attempts to recover the clean version
+    - The Discriminator evaluates both real clean images and the Generator's outputs
+    - The Generator improves by trying to fool the Discriminator
+
+
+- Key Components in the Implementation:
+    - The Generator uses an encoder-decoder architecture with skip connections
+    - The Discriminator uses convolutional layers to classify images as real or fake
+    - The loss functions balance reconstruction quality and realism
+
+- Advantages of GAN-based Denoising:
+    - Can learn complex noise patterns
+    - Produces more realistic outputs compared to traditional methods
+    - Better at preserving fine details and textures
